@@ -1,0 +1,41 @@
+Running SLURM prolog script on ecsai02
+===============================================================================
+Job started on Thu Apr 16 15:31:18 BST 2026
+Job ID          : 843516
+Job name        : fat_job
+WorkDir         : /iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema
+Command         : /iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema/fat_job.sh
+Partition       : ecsstudents_l4
+Num hosts       : 1
+Num cores       : 4
+Num of tasks    : 1
+Hosts allocated : ecsai02
+Job Output Follows ...
+===============================================================================
+[INFO] Writing results to /iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema/results/results.csv
+[INFO] Configuration: 1000 maps, 7 tiles, 10 deadlines, 50 cutoffs
+[INFO] Total (map, deadline, cutoff) combinations: 500000
+[RESUME] Found 1857 rows already completed. Remaining: 498143
+[MAP 4/1000] Completed in 313.2s (143 new rows)
+[PROGRESS] Map 5/1000 | Rows this run: 500 | Rate: 0.46 rows/s | ETA: 303.0 h
+[MAP 5/1000] Completed in 1095.7s (500 new rows)
+==============================================================================
+Running epilogue script on ecsai02.
+
+Submit time  : 2026-04-16T15:31:18
+Start time   : 2026-04-16T15:31:18
+End time     : 2026-04-16T16:07:07
+Elapsed time : 00:35:49 (Timelimit=1-00:00:00)
+
+Job ID: 843516
+Cluster: iridis_x
+User/Group: as17n23/fp
+State: CANCELLED (exit code 0)
+Nodes: 1
+Cores per node: 4
+CPU Utilized: 00:00:02
+CPU Efficiency: 0.02% of 02:23:16 core-walltime
+Job Wall-clock time: 00:35:49
+Memory Utilized: 28.82 MB
+Memory Efficiency: 0.70% of 4.00 GB (4.00 GB/node)
+

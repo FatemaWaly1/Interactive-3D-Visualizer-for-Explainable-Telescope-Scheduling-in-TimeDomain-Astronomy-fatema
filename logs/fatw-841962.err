@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema/scripts/evaluation.py", line 25, in <module>
+    from services.ga_scheduler import (
+  File "/iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema/services/ga_scheduler.py", line 74, in <module>
+    max_opt_seconds: float | None = None,
+TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'

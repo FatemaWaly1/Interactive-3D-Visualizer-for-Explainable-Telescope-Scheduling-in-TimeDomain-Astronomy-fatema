@@ -1,0 +1,44 @@
+{
+  "telescopes": [
+    {
+      "dwell_time": 10.0,
+      "name": "TestScope1",
+      "slew_speed": 3.0
+    },
+    {
+      "dwell_time": 20.0,
+      "name": "TestScope2",
+      "slew_speed": 4.0
+    },
+    {
+      "dwell_time": 2323.0,
+      "name": "Telescope1",
+      "slew_speed": 243.0
+    },
+    {
+      "dwell_time": 4.0,
+      "name": "tele1",
+      "slew_speed": 7.0
+    },
+    {
+      "dwell_time": 60.0,
+      "name": "test2",
+      "slew_speed": 5.0
+    },
+    {
+      "dwell_time": 60.0,
+      "name": "Tele4",
+      "slew_speed": 5.0
+    },
+    {
+      "dwell_time": 60.0,
+      "name": "tele4",
+      "slew_speed": 5.0
+    },
+    {
+      "dwell_time": 60.0,
+      "name": "tele",
+      "slew_speed": 5.0
+    }
+  ]
+}

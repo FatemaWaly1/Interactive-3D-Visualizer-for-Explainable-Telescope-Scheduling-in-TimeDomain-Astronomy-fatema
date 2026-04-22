@@ -1,0 +1,128 @@
+Running SLURM prolog script on ecsai02
+===============================================================================
+Job started on Fri Apr 17 20:49:28 BST 2026
+Job ID          : 850021
+Job name        : fat_job
+WorkDir         : /iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema
+Command         : /iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema/fat_job.sh
+Partition       : ecsstudents_l4
+Num hosts       : 1
+Num cores       : 24
+Num of tasks    : 1
+Hosts allocated : ecsai02
+Job Output Follows ...
+===============================================================================
+[INFO] Writing results to /iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema/results/results.csv
+[INFO] Configuration: 1000 maps, 7 tiles, 10 deadlines, 50 cutoffs, 24 workers
+[INFO] Total (map, deadline, cutoff) combinations: 500000
+[RESUME] 914 maps already complete; 0 partial maps will be re-run.
+[PROGRESS] Map 914 done | 1/86 maps this run | Rate: 0.03 maps/min | Rows: 500 | ETA: 54.0 h
+[PROGRESS] Map 936 done | 2/86 maps this run | Rate: 0.05 maps/min | Rows: 1000 | ETA: 26.7 h
+[PROGRESS] Map 934 done | 3/86 maps this run | Rate: 0.08 maps/min | Rows: 1500 | ETA: 17.6 h
+[PROGRESS] Map 925 done | 4/86 maps this run | Rate: 0.10 maps/min | Rows: 2000 | ETA: 13.0 h
+[PROGRESS] Map 935 done | 5/86 maps this run | Rate: 0.13 maps/min | Rows: 2500 | ETA: 10.3 h
+[PROGRESS] Map 930 done | 6/86 maps this run | Rate: 0.16 maps/min | Rows: 3000 | ETA: 8.5 h
+[PROGRESS] Map 916 done | 7/86 maps this run | Rate: 0.18 maps/min | Rows: 3500 | ETA: 7.2 h
+[PROGRESS] Map 933 done | 8/86 maps this run | Rate: 0.21 maps/min | Rows: 4000 | ETA: 6.2 h
+[PROGRESS] Map 923 done | 9/86 maps this run | Rate: 0.24 maps/min | Rows: 4500 | ETA: 5.4 h
+[PROGRESS] Map 928 done | 10/86 maps this run | Rate: 0.26 maps/min | Rows: 5000 | ETA: 4.8 h
+[PROGRESS] Map 927 done | 11/86 maps this run | Rate: 0.29 maps/min | Rows: 5500 | ETA: 4.3 h
+[PROGRESS] Map 920 done | 12/86 maps this run | Rate: 0.31 maps/min | Rows: 6000 | ETA: 3.9 h
+[PROGRESS] Map 917 done | 13/86 maps this run | Rate: 0.34 maps/min | Rows: 6500 | ETA: 3.6 h
+[PROGRESS] Map 932 done | 14/86 maps this run | Rate: 0.37 maps/min | Rows: 7000 | ETA: 3.3 h
+[PROGRESS] Map 937 done | 15/86 maps this run | Rate: 0.39 maps/min | Rows: 7500 | ETA: 3.0 h
+[PROGRESS] Map 922 done | 16/86 maps this run | Rate: 0.42 maps/min | Rows: 8000 | ETA: 2.8 h
+[PROGRESS] Map 924 done | 17/86 maps this run | Rate: 0.44 maps/min | Rows: 8500 | ETA: 2.6 h
+[PROGRESS] Map 926 done | 18/86 maps this run | Rate: 0.47 maps/min | Rows: 9000 | ETA: 2.4 h
+[PROGRESS] Map 918 done | 19/86 maps this run | Rate: 0.50 maps/min | Rows: 9500 | ETA: 2.2 h
+[PROGRESS] Map 919 done | 20/86 maps this run | Rate: 0.52 maps/min | Rows: 10000 | ETA: 2.1 h
+[PROGRESS] Map 915 done | 21/86 maps this run | Rate: 0.55 maps/min | Rows: 10500 | ETA: 2.0 h
+[PROGRESS] Map 931 done | 22/86 maps this run | Rate: 0.57 maps/min | Rows: 11000 | ETA: 1.9 h
+[PROGRESS] Map 921 done | 23/86 maps this run | Rate: 0.60 maps/min | Rows: 11500 | ETA: 1.8 h
+[PROGRESS] Map 929 done | 24/86 maps this run | Rate: 0.62 maps/min | Rows: 12000 | ETA: 1.7 h
+[PROGRESS] Map 938 done | 25/86 maps this run | Rate: 0.32 maps/min | Rows: 12500 | ETA: 3.2 h
+[PROGRESS] Map 943 done | 26/86 maps this run | Rate: 0.33 maps/min | Rows: 13000 | ETA: 3.0 h
+[PROGRESS] Map 940 done | 27/86 maps this run | Rate: 0.34 maps/min | Rows: 13500 | ETA: 2.9 h
+[PROGRESS] Map 939 done | 28/86 maps this run | Rate: 0.36 maps/min | Rows: 14000 | ETA: 2.7 h
+[PROGRESS] Map 941 done | 29/86 maps this run | Rate: 0.37 maps/min | Rows: 14500 | ETA: 2.6 h
+[PROGRESS] Map 942 done | 30/86 maps this run | Rate: 0.38 maps/min | Rows: 15000 | ETA: 2.4 h
+[PROGRESS] Map 946 done | 31/86 maps this run | Rate: 0.40 maps/min | Rows: 15500 | ETA: 2.3 h
+[PROGRESS] Map 944 done | 32/86 maps this run | Rate: 0.41 maps/min | Rows: 16000 | ETA: 2.2 h
+[PROGRESS] Map 945 done | 33/86 maps this run | Rate: 0.42 maps/min | Rows: 16500 | ETA: 2.1 h
+[PROGRESS] Map 947 done | 34/86 maps this run | Rate: 0.43 maps/min | Rows: 17000 | ETA: 2.0 h
+[PROGRESS] Map 949 done | 35/86 maps this run | Rate: 0.45 maps/min | Rows: 17500 | ETA: 1.9 h
+[PROGRESS] Map 952 done | 36/86 maps this run | Rate: 0.46 maps/min | Rows: 18000 | ETA: 1.8 h
+[PROGRESS] Map 948 done | 37/86 maps this run | Rate: 0.47 maps/min | Rows: 18500 | ETA: 1.7 h
+[PROGRESS] Map 953 done | 38/86 maps this run | Rate: 0.48 maps/min | Rows: 19000 | ETA: 1.7 h
+[PROGRESS] Map 954 done | 39/86 maps this run | Rate: 0.50 maps/min | Rows: 19500 | ETA: 1.6 h
+[PROGRESS] Map 950 done | 40/86 maps this run | Rate: 0.51 maps/min | Rows: 20000 | ETA: 1.5 h
+[PROGRESS] Map 951 done | 41/86 maps this run | Rate: 0.52 maps/min | Rows: 20500 | ETA: 1.4 h
+[PROGRESS] Map 955 done | 42/86 maps this run | Rate: 0.53 maps/min | Rows: 21000 | ETA: 1.4 h
+[PROGRESS] Map 956 done | 43/86 maps this run | Rate: 0.55 maps/min | Rows: 21500 | ETA: 1.3 h
+[PROGRESS] Map 957 done | 44/86 maps this run | Rate: 0.56 maps/min | Rows: 22000 | ETA: 1.3 h
+[PROGRESS] Map 958 done | 45/86 maps this run | Rate: 0.57 maps/min | Rows: 22500 | ETA: 1.2 h
+[PROGRESS] Map 959 done | 46/86 maps this run | Rate: 0.58 maps/min | Rows: 23000 | ETA: 1.1 h
+[PROGRESS] Map 961 done | 47/86 maps this run | Rate: 0.59 maps/min | Rows: 23500 | ETA: 1.1 h
+[PROGRESS] Map 960 done | 48/86 maps this run | Rate: 0.61 maps/min | Rows: 24000 | ETA: 1.0 h
+[PROGRESS] Map 962 done | 49/86 maps this run | Rate: 0.41 maps/min | Rows: 24500 | ETA: 1.5 h
+[PROGRESS] Map 964 done | 50/86 maps this run | Rate: 0.42 maps/min | Rows: 25000 | ETA: 1.4 h
+[PROGRESS] Map 965 done | 51/86 maps this run | Rate: 0.43 maps/min | Rows: 25500 | ETA: 1.4 h
+[PROGRESS] Map 963 done | 52/86 maps this run | Rate: 0.44 maps/min | Rows: 26000 | ETA: 1.3 h
+[PROGRESS] Map 967 done | 53/86 maps this run | Rate: 0.45 maps/min | Rows: 26500 | ETA: 1.2 h
+[PROGRESS] Map 969 done | 54/86 maps this run | Rate: 0.46 maps/min | Rows: 27000 | ETA: 1.2 h
+[PROGRESS] Map 968 done | 55/86 maps this run | Rate: 0.46 maps/min | Rows: 27500 | ETA: 1.1 h
+[PROGRESS] Map 966 done | 56/86 maps this run | Rate: 0.47 maps/min | Rows: 28000 | ETA: 1.1 h
+[PROGRESS] Map 971 done | 57/86 maps this run | Rate: 0.48 maps/min | Rows: 28500 | ETA: 1.0 h
+[PROGRESS] Map 970 done | 58/86 maps this run | Rate: 0.49 maps/min | Rows: 29000 | ETA: 1.0 h
+[PROGRESS] Map 972 done | 59/86 maps this run | Rate: 0.50 maps/min | Rows: 29500 | ETA: 0.9 h
+[PROGRESS] Map 974 done | 60/86 maps this run | Rate: 0.51 maps/min | Rows: 30000 | ETA: 0.9 h
+[PROGRESS] Map 975 done | 61/86 maps this run | Rate: 0.51 maps/min | Rows: 30500 | ETA: 0.8 h
+[PROGRESS] Map 976 done | 62/86 maps this run | Rate: 0.52 maps/min | Rows: 31000 | ETA: 0.8 h
+[PROGRESS] Map 973 done | 63/86 maps this run | Rate: 0.53 maps/min | Rows: 31500 | ETA: 0.7 h
+[PROGRESS] Map 977 done | 64/86 maps this run | Rate: 0.54 maps/min | Rows: 32000 | ETA: 0.7 h
+[PROGRESS] Map 978 done | 65/86 maps this run | Rate: 0.55 maps/min | Rows: 32500 | ETA: 0.6 h
+[PROGRESS] Map 979 done | 66/86 maps this run | Rate: 0.56 maps/min | Rows: 33000 | ETA: 0.6 h
+[PROGRESS] Map 980 done | 67/86 maps this run | Rate: 0.56 maps/min | Rows: 33500 | ETA: 0.6 h
+[PROGRESS] Map 982 done | 68/86 maps this run | Rate: 0.57 maps/min | Rows: 34000 | ETA: 0.5 h
+[PROGRESS] Map 981 done | 69/86 maps this run | Rate: 0.58 maps/min | Rows: 34500 | ETA: 0.5 h
+[PROGRESS] Map 983 done | 70/86 maps this run | Rate: 0.59 maps/min | Rows: 35000 | ETA: 0.5 h
+[PROGRESS] Map 984 done | 71/86 maps this run | Rate: 0.60 maps/min | Rows: 35500 | ETA: 0.4 h
+[PROGRESS] Map 985 done | 72/86 maps this run | Rate: 0.61 maps/min | Rows: 36000 | ETA: 0.4 h
+[PROGRESS] Map 990 done | 73/86 maps this run | Rate: 0.53 maps/min | Rows: 36500 | ETA: 0.4 h
+[PROGRESS] Map 995 done | 74/86 maps this run | Rate: 0.54 maps/min | Rows: 37000 | ETA: 0.4 h
+[PROGRESS] Map 987 done | 75/86 maps this run | Rate: 0.55 maps/min | Rows: 37500 | ETA: 0.3 h
+[PROGRESS] Map 997 done | 76/86 maps this run | Rate: 0.56 maps/min | Rows: 38000 | ETA: 0.3 h
+[PROGRESS] Map 996 done | 77/86 maps this run | Rate: 0.56 maps/min | Rows: 38500 | ETA: 0.3 h
+[PROGRESS] Map 994 done | 78/86 maps this run | Rate: 0.57 maps/min | Rows: 39000 | ETA: 0.2 h
+[PROGRESS] Map 991 done | 79/86 maps this run | Rate: 0.58 maps/min | Rows: 39500 | ETA: 0.2 h
+[PROGRESS] Map 993 done | 80/86 maps this run | Rate: 0.58 maps/min | Rows: 40000 | ETA: 0.2 h
+[PROGRESS] Map 998 done | 81/86 maps this run | Rate: 0.59 maps/min | Rows: 40500 | ETA: 0.1 h
+[PROGRESS] Map 999 done | 82/86 maps this run | Rate: 0.60 maps/min | Rows: 41000 | ETA: 0.1 h
+[PROGRESS] Map 989 done | 83/86 maps this run | Rate: 0.57 maps/min | Rows: 41500 | ETA: 0.1 h
+[PROGRESS] Map 988 done | 84/86 maps this run | Rate: 0.58 maps/min | Rows: 42000 | ETA: 0.1 h
+[PROGRESS] Map 986 done | 85/86 maps this run | Rate: 0.58 maps/min | Rows: 42500 | ETA: 0.0 h
+[PROGRESS] Map 992 done | 86/86 maps this run | Rate: 0.59 maps/min | Rows: 43000 | ETA: 0.0 h
+[DONE] Wrote 43000 new rows across 86 maps in 2.42 hours
+[INFO] Summarising by (deadline, cutoff_perc)...
+[INFO] Summary written to /iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema/results/results_summary.csv
+Evaluation completed for FATW dataset.
+==============================================================================
+Running epilogue script on ecsai02.
+
+Submit time  : 2026-04-17T20:49:27
+Start time   : 2026-04-17T20:49:28
+End time     : 2026-04-17T23:14:59
+Elapsed time : 02:25:31 (Timelimit=12:00:00)
+
+Job ID: 850021
+Cluster: iridis_x
+User/Group: as17n23/fp
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 24
+CPU Utilized: 2-04:01:51
+CPU Efficiency: 89.39% of 2-10:12:24 core-walltime
+Job Wall-clock time: 02:25:31
+Memory Utilized: 747.71 MB
+Memory Efficiency: 4.56% of 16.00 GB (16.00 GB/node)
+

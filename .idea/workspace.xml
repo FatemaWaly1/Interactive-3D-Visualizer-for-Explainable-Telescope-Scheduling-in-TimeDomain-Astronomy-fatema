@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="882acbcf-81bd-446e-b9e3-21dbd368122c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ml/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ml/pointer_network.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/evaluation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/expected_merit.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/ga_scheduler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/hybrid_dataset_generator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/schedule_metrics.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_controllers_workflow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_integration_ga_schedule_fom.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_scenario_compare_workflow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/scenario_compare_dialog.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/splash_screen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/interaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/interaction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/telescopes.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/telescopes.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/tile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/tiles_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/tiles_io.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sky_visualizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/sky_visualizer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/tets_interaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_interaction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/cdf_plot_widget.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/cdf_plot_widget.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/schedule_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/schedule_panel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/visualization/sphere_renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/visualization/sphere_renderer.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Unit Test" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;FatemaWaly1&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/FatemaWaly1/PythonProject.git&quot;,
+    &quot;accountId&quot;: &quot;1cfcb5bf-f0d2-4790-b2dd-27249a73c503&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="34U9SUDRHCZ1rqRwrya6R73NGd3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python tests.Python tests for tests.test_Sch_Tele.Test_Sch_Tele.test_init_sets_attributes.executor": "Run",
+    "Python tests.Python tests for tests.test_integration_ga_schedule_fom.TestIntegrationGAScheduleFoM.executor": "Run",
+    "Python tests.Python tests for tests.test_integration_ga_schedule_fom.TestIntegrationGAScheduleFoM.test_ga_best_order_fom_matches_schedule_metrics_fom.executor": "Run",
+    "Python tests.Python tests for tests.test_integration_ga_schedule_fom.TestIntegrationGAScheduleFoM.test_ga_output_order_is_valid_permutation.executor": "Run",
+    "Python tests.Python tests for tests.test_scenario_compare_workflow.TestScenarioCompareWorkflow.executor": "Run",
+    "Python tests.Python tests in test_Sch_Tele.py.executor": "Run",
+    "Python tests.Python tests in test_Schedule.py.executor": "Run",
+    "Python tests.Python tests in test_Sphere_rendered_math.py.executor": "Run",
+    "Python.ScheduleWindow.executor": "Run",
+    "Python.evaluation.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.sky_visualizer.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "fatema",
+    "last_opened_file_path": "C:/Users/fatem/PycharmProjects/PythonProject",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Python.evaluation">
+    <configuration name="evaluation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PythonProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/evaluation.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PythonProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for tests.test_integration_ga_schedule_fom.TestIntegrationGAScheduleFoM" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="PythonProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;tests.test_integration_ga_schedule_fom.TestIntegrationGAScheduleFoM&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for tests.test_integration_ga_schedule_fom.TestIntegrationGAScheduleFoM.test_ga_output_order_is_valid_permutation" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="PythonProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;tests.test_integration_ga_schedule_fom.TestIntegrationGAScheduleFoM.test_ga_output_order_is_valid_permutation&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for tests.test_scenario_compare_workflow.TestScenarioCompareWorkflow" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="PythonProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;tests.test_scenario_compare_workflow.TestScenarioCompareWorkflow&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.evaluation" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python tests.Python tests for tests.test_scenario_compare_workflow.TestScenarioCompareWorkflow" />
+        <item itemvalue="Python tests.Python tests for tests.test_integration_ga_schedule_fom.TestIntegrationGAScheduleFoM" />
+        <item itemvalue="Python tests.Python tests for tests.test_integration_ga_schedule_fom.TestIntegrationGAScheduleFoM.test_ga_output_order_is_valid_permutation" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PY-252.26830.99" />
+        <option value="bundled-python-sdk-164cda30dcd9-0af03a5fa574-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.26830.99" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="882acbcf-81bd-446e-b9e3-21dbd368122c" name="Changes" comment="" />
+      <created>1761257282852</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761257282852</updated>
+      <workItem from="1761257284042" duration="16457000" />
+      <workItem from="1761923930562" duration="203000" />
+      <workItem from="1762896778571" duration="10309000" />
+      <workItem from="1763111278092" duration="24752000" />
+      <workItem from="1763905422925" duration="42476000" />
+      <workItem from="1765188557897" duration="454000" />
+      <workItem from="1766575218191" duration="364000" />
+      <workItem from="1770638690225" duration="20740000" />
+      <workItem from="1772021817253" duration="3000" />
+      <workItem from="1772021878405" duration="43035000" />
+      <workItem from="1772805551168" duration="1447000" />
+      <workItem from="1773354281262" duration="42169000" />
+      <workItem from="1775468318598" duration="11015000" />
+      <workItem from="1775554154931" duration="8988000" />
+      <workItem from="1775727881315" duration="7417000" />
+      <workItem from="1775809253029" duration="2150000" />
+      <workItem from="1775901075739" duration="7749000" />
+      <workItem from="1775978986111" duration="16442000" />
+      <workItem from="1776074864972" duration="7718000" />
+      <workItem from="1776159030290" duration="17242000" />
+      <workItem from="1776329359653" duration="8477000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/PythonProject$main.coverage" NAME="main Coverage Results" MODIFIED="1776257530761" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PythonProject$.coverage" NAME=" Coverage Results" MODIFIED="1776160620074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PythonProject$evaluation.coverage" NAME="evaluation Coverage Results" MODIFIED="1776336018445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
+    <SUITE FILE_PATH="coverage/PythonProject$sky_visualizer.coverage" NAME="sky_visualizer Coverage Results" MODIFIED="1764150247334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PythonProject$ScheduleWindow.coverage" NAME="ScheduleWindow Coverage Results" MODIFIED="1770726218375" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ui" />
+  </component>
+</project>

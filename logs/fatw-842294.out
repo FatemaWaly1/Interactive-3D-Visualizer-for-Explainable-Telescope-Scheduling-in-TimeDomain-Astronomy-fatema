@@ -1,0 +1,34 @@
+Running SLURM prolog script on ecsai04
+===============================================================================
+Job started on Thu Apr 16 14:16:37 BST 2026
+Job ID          : 842294
+Job name        : fat_job
+WorkDir         : /iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema
+Command         : /iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema/fat_job.sh
+Partition       : ecsstudents_l4
+Num hosts       : 1
+Num cores       : 4
+Num of tasks    : 1
+Hosts allocated : ecsai04
+Job Output Follows ...
+===============================================================================
+==============================================================================
+Running epilogue script on ecsai04.
+
+Submit time  : 2026-04-16T14:16:36
+Start time   : 2026-04-16T14:16:37
+End time     : 2026-04-16T14:27:49
+Elapsed time : 00:11:12 (Timelimit=1-00:00:00)
+
+Job ID: 842294
+Cluster: iridis_x
+User/Group: as17n23/fp
+State: CANCELLED (exit code 0)
+Nodes: 1
+Cores per node: 4
+CPU Utilized: 00:00:02
+CPU Efficiency: 0.07% of 00:44:48 core-walltime
+Job Wall-clock time: 00:11:12
+Memory Utilized: 28.43 MB
+Memory Efficiency: 0.69% of 4.00 GB (4.00 GB/node)
+

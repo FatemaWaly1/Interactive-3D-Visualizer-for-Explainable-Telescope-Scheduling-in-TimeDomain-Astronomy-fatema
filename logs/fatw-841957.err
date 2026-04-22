@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/iridisfs/scratch/as17n23/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema/scripts/evaluation.py", line 23, in <module>
+    from models.coordinates import ra_dec_to_xyz
+ModuleNotFoundError: No module named 'models'
