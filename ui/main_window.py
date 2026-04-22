@@ -47,6 +47,8 @@ from datetime import datetime
 from ui.ga_progress_dialog import GAProgressDialog
 from ui.scenario_compare_dialog import ScenarioCompareDialog
 
+from ui.colorbar_widget import ProbabilityColorBar
+
 import numpy as np
 
 
@@ -122,6 +124,17 @@ class MainWindow(QMainWindow):
         splitter = QSplitter(Qt.Orientation.Horizontal)
         splitter.setChildrenCollapsible(False)
         layout.addWidget(splitter)
+        self._splitter = splitter
+
+        # # left
+        # left_container = QWidget()
+        # left_layout = QVBoxLayout(left_container)
+        # left_layout.setContentsMargins(0, 0, 0, 0)
+        # left_layout.setSpacing(0)
+        #
+        # self.vtk_widget = QtInteractor()
+        # left_layout.addWidget(self.vtk_widget)
+        # splitter.addWidget(left_container)
 
         # left
         left_container = QWidget()
@@ -129,8 +142,40 @@ class MainWindow(QMainWindow):
         left_layout.setContentsMargins(0, 0, 0, 0)
         left_layout.setSpacing(0)
 
+        # Horizontal row: 3D view on the left, probability colorbar on the right
+        sphere_row = QWidget()
+        sphere_row_layout = QHBoxLayout(sphere_row)
+        sphere_row_layout.setContentsMargins(0, 0, 0, 0)
+        sphere_row_layout.setSpacing(4)
+
         self.vtk_widget = QtInteractor()
-        left_layout.addWidget(self.vtk_widget)
+        sphere_row_layout.addWidget(self.vtk_widget, stretch=1)
+
+        self._prob_colorbar = ProbabilityColorBar(
+            cmap_name="viridis",
+            title="Probability",
+        )
+        self._prob_colorbar.hide()  # hidden until the user loads tiles
+        sphere_row_layout.addWidget(self._prob_colorbar)
+
+        # Small reopen button, visible only when the schedule panel is hidden
+        self._show_panel_btn = QPushButton("‹ Schedule")
+        self._show_panel_btn.setToolTip("Show schedule panel")
+        self._show_panel_btn.setCursor(Qt.PointingHandCursor)
+        self._show_panel_btn.setFixedWidth(90)
+        self._show_panel_btn.setStyleSheet(
+            "QPushButton {"
+            " background-color: #161b22; color: #e6edf3;"
+            " border: 1px solid #30363d; border-radius: 4px;"
+            " padding: 4px 8px; font-size: 10pt;"
+            "}"
+            "QPushButton:hover { background-color: #21262d; }"
+        )
+        self._show_panel_btn.clicked.connect(self._show_schedule_panel)
+        self._show_panel_btn.hide()
+        sphere_row_layout.addWidget(self._show_panel_btn)
+
+        left_layout.addWidget(sphere_row)
         splitter.addWidget(left_container)
 
         self.visualizer = SkyVisualizer(fov_size=1.5)
@@ -171,6 +216,7 @@ class MainWindow(QMainWindow):
             self.on_optimise_sch_clicked
         )
         self.schedule_panel.dwell_manual_changed.connect(self.mark_schedule_file_modified)
+        self.schedule_panel.hide_panel_requested.connect(self._hide_schedule_panel)
 
         # Give schedule panel a handle back to the main window (for status updates)
         self.schedule_panel.main_window = self
@@ -293,10 +339,8 @@ class MainWindow(QMainWindow):
         self._ga_baseline_fom: float = 0.0
         self._ga_input_tiles = []
         self._ga_start_position = None
-        # Last FoM computed for the current schedule (Evaluate FoM or GA); used when saving JSON metadata.
         self._last_schedule_fom: float | None = None
 
-        # Last schedule file path (load/save); "modified" after edits so user knows disk may differ.
         self._schedule_file_path: str | None = None
         self._schedule_file_dirty: bool = False
         self._refresh_schedule_file_indicator()
@@ -342,7 +386,7 @@ class MainWindow(QMainWindow):
             self,
             "Load Tiles",
             "",
-            "Tile Files (*.json *.csv)"
+            "Tile Files (*.json *.csv *.fits *.fits.gz)"
         )
         if path:
             self.on_load_tiles(path)
@@ -387,7 +431,7 @@ class MainWindow(QMainWindow):
         picker.Pick(x, y, 0, self.visualizer.renderer.plotter.renderer)
         point_id = picker.GetPointId()
 
-        # Stop if nothing picked, stop
+        # if nothing picked, stop
         if point_id == -1:
             return
 
@@ -605,8 +649,15 @@ class MainWindow(QMainWindow):
         self.visualizer.load_tiles_from_file(path, normalize=True, clear_existing=True)
         self.visualizer.schedule.clear()
         self._set_schedule_file_from_disk(None)
-        max_prob = max((t.get("prob", 0.0) for t in self.visualizer.tiles), default=1.0)
-        self.schedule_panel.set_prob_context(max_prob)
+
+        # max_prob = max((t.get("prob", 0.0) for t in self.visualizer.tiles), default=1.0)
+        probs = [float(t.get("prob", 0.0)) for t in self.visualizer.tiles]
+        if probs:
+            self._prob_colorbar.set_range(min(probs), max(probs), n_ticks=7)
+            self._prob_colorbar.show()
+        else:
+            self._prob_colorbar.hide()
+
         self.schedule_panel.update_schedule()
         self.refresh_scene()
         self._set_status(f"Loaded {len(self.visualizer.tiles)} tiles")
@@ -1184,3 +1235,19 @@ class MainWindow(QMainWindow):
             current_tiles_getter=lambda: self.visualizer.schedule.get_tiles(),
         )
         dlg.exec()
+
+    def _hide_schedule_panel(self) -> None:
+        """Hide the right-hand schedule panel and show the small reopen button."""
+        if getattr(self, "_splitter", None) is not None:
+            self._splitter_sizes_before_hide = self._splitter.sizes()
+        self.schedule_panel.hide()
+        if getattr(self, "_show_panel_btn", None) is not None:
+            self._show_panel_btn.show()
+
+    def _show_schedule_panel(self) -> None:
+        """Show the right-hand schedule panel and hide the reopen button."""
+        self.schedule_panel.show()
+        if getattr(self, "_splitter", None) is not None and getattr(self, "_splitter_sizes_before_hide", None):
+            self._splitter.setSizes(self._splitter_sizes_before_hide)
+        if getattr(self, "_show_panel_btn", None) is not None:
+            self._show_panel_btn.hide()

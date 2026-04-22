@@ -34,7 +34,6 @@ class FoMDeadlinesDialog(QDialog):
     def _build_ui(self):
         layout = QVBoxLayout(self)
 
-        # Input section
         self.prompt_label = QLabel(
             "Enter deadlines in seconds (comma-separated, e.g. 100, 200, 300):"
         )
@@ -53,14 +52,12 @@ class FoMDeadlinesDialog(QDialog):
         btn_row.addWidget(self.cancel_btn)
         layout.addLayout(btn_row)
 
-        # Error message (hidden until set_error)
         self.error_label = QLabel("")
         self.error_label.setStyleSheet("color: #e74c3c;")
         self.error_label.setWordWrap(True)
         self.error_label.setVisible(False)
         layout.addWidget(self.error_label)
 
-        # --- Separator and results section (hidden until set_fom_results) ---
         self.results_frame = QFrame()
         self.results_frame.setFrameStyle(QFrame.Shape.StyledPanel)
         results_layout = QVBoxLayout(self.results_frame)
@@ -79,9 +76,6 @@ class FoMDeadlinesDialog(QDialog):
         results_layout.addWidget(self.close_btn)
 
         layout.addWidget(self.results_frame)
-        # Show the FoM details section immediately so the dialog always
-        # looks like the “second picture”; it will be populated once
-        # a valid FoM has been computed.
         self.results_frame.setVisible(True)
 
     def _on_ok(self):

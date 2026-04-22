@@ -55,27 +55,6 @@ class SkyVisualizer:
 
         print(f"Generated {tiles_per_side * tiles_per_side} tiles")
 
-    def generate_map_tiles(
-        self,
-        *,
-        map_type: str,
-        n_tiles: int = 200,
-        seed: int | None = None,
-        clear_existing: bool = True,
-        **kwargs,
-    ) -> None:
-        """
-        Generate a probability map and populate `self.tiles`.
-
-        This is a thin wrapper around `services.map_generator.generate_map`.
-        """
-        if clear_existing:
-            self.tiles = []
-
-        tiles = generate_map(map_type=map_type, n_tiles=n_tiles, seed=seed, **kwargs)
-        for t in tiles:
-            self._create_tile(t["ra"], t["dec"], float(t["prob"]), source=t.get("source", "generated"))
-
     def _create_tile(self, ra, dec, prob, source="generated"):
         """
         Create a single tile and add to tiles list.

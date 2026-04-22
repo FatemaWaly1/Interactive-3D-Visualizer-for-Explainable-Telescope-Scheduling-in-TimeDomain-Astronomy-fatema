@@ -164,7 +164,6 @@ def evaluate_one_config(
 def _run_single_map(payload: tuple[int, EvalConfig]) -> list[list[Any]]:
     """Process one map; designed for ProcessPoolExecutor (top-level for pickling)."""
     map_id, cfg = payload
-    # Deterministic per-map seed so results are reproducible regardless of worker order
     random.seed(cfg.seed + map_id)
     np.random.seed(cfg.seed + map_id)
 
@@ -291,8 +290,6 @@ def main() -> None:
     print(f"[INFO] Total (map, deadline, cutoff) combinations: {total_runs}",
           flush=True)
 
-    # --- Resume logic: which maps are already fully done? ---
-    # A map is "done" only if all deadlines x cutoffs rows are present for that map_id.
     expected_per_map = len(deadlines) * len(cutoffs)
     map_row_counts: dict[int, int] = {}
     if output_path.exists() and output_path.stat().st_size > 0:
@@ -320,7 +317,6 @@ def main() -> None:
         summarise(output_path)
         return
 
-    # If there were partial rows, rewrite the CSV dropping them and keeping only complete maps.
     if output_path.exists() and any(
         c != expected_per_map for c in map_row_counts.values()
     ):
@@ -336,7 +332,6 @@ def main() -> None:
         dwell_time=args.dwell_time,
     )
 
-    # Append mode; header only if file is new/empty
     file_is_new = (not output_path.exists()) or output_path.stat().st_size == 0
 
     start_time = time.time()

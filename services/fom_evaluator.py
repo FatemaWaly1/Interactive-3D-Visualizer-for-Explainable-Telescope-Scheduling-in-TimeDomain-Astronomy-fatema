@@ -1,19 +1,17 @@
 """
 Shared FoM evaluation helpers used by UI and reporting paths.
 
-This module centralizes the schedule -> timeline -> CDF -> expected_FoM pipeline so
-the application has one source of truth for FoM calculations.
+`evaluate_schedule_fom` delegates timeline + CDF + FoM to `analyse_schedule` so GA,
+fitness, and reporting share one implementation. Callers that need slew / late counts
+should use `analyse_schedule` directly.
 """
 
 from __future__ import annotations
 
-import math
 from dataclasses import dataclass
 from typing import Any, Sequence
 
-from services.expected_merit import expected_FoM
-from services.schedule_metrics import compute_merits_for_deadlines
-from services.geometry import angdist_vec
+from services.schedule_metrics import analyse_schedule, compute_merits_for_deadlines
 
 
 @dataclass
@@ -27,6 +25,10 @@ class FoMEvaluationResult:
     cumulative_probs: list[float]
 
 
+def _total_tile_probability(tiles: Sequence[dict[str, Any]]) -> float:
+    return sum(float(t.get("prob", 0.0)) for t in tiles)
+
+
 def evaluate_schedule_fom(
     tiles: Sequence[dict[str, Any]],
     telescope: Any,
@@ -36,56 +38,23 @@ def evaluate_schedule_fom(
     """
     Evaluate FoM for an ordered schedule and finite deadline list.
 
-    Raises ValueError when inputs are invalid or probabilities cannot be normalized.
+    Uses the same timeline and CDF construction as `analyse_schedule` (including
+    resolving `position` from RA/Dec when `position` is absent).
+
+    Raises:
+        ValueError: If the sum of tile probabilities is zero (cannot normalise).
     """
-    deadlines_full = list(deadlines_finite) + [float("inf")]
-    merits = compute_merits_for_deadlines(deadlines_full)
-
-    prev_pos = start_position
-    time_accum = 0.0
-    tile_end_times: list[float] = []
-    tile_probs: list[float] = []
-    total_prob = 0.0
-
-    for tile in tiles:
-        dwell = float(tile.get("dwell_time", 60.0))
-        slew = 0.0
-        if telescope and prev_pos is not None:
-            dist_rad = angdist_vec(prev_pos, tile["position"])
-            dist_deg = math.degrees(dist_rad)
-            if telescope.slew_speed > 0.0:
-                slew = dist_deg / telescope.slew_speed
-        time_accum += slew + dwell
-        prob = float(tile.get("prob", 0.0))
-        total_prob += prob
-        tile_end_times.append(time_accum)
-        tile_probs.append(prob)
-        prev_pos = tile["position"]
-
-    if total_prob <= 0.0:
+    if _total_tile_probability(tiles) <= 0.0:
         raise ValueError("Cannot evaluate FoM: total tile probability is zero.")
 
-    cumulative_probs: list[float] = []
-    running = 0.0
-    for p in tile_probs:
-        running += p / total_prob
-        cumulative_probs.append(running)
+    deadlines_full = list(deadlines_finite) + [float("inf")]
+    merits = compute_merits_for_deadlines(deadlines_full)
+    metric = analyse_schedule(tiles, telescope, start_position, list(deadlines_finite))
 
-    def detection_cdf(t: float) -> float:
-        if t <= 0.0:
-            return 0.0
-        cdf_value = 0.0
-        for end_time, cum_prob in zip(tile_end_times, cumulative_probs):
-            if t < end_time:
-                break
-            cdf_value = cum_prob
-        return min(cdf_value, 1.0)
-
-    fom_value = float(expected_FoM(deadlines_full, merits, detection_cdf))
     return FoMEvaluationResult(
-        fom=fom_value,
+        fom=float(metric.fom),
         deadlines_full=deadlines_full,
         merits=merits,
-        tile_end_times=tile_end_times,
-        cumulative_probs=cumulative_probs,
+        tile_end_times=list(metric.tile_end_times),
+        cumulative_probs=list(metric.cdf_cmv_prob),
     )

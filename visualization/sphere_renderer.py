@@ -98,12 +98,18 @@ class SphereRenderer:
         combined_mesh.cell_data['Probability'] = all_probs
 
         # Add to plotter
+        # self.plotter.add_mesh(
+        #     combined_mesh,
+        #     scalars='Probability',
+        #     show_scalar_bar=True,
+        #     pickable=False,
+        #     scalar_bar_args=SCALAR_BAR_CONFIG
+        # )
         self.plotter.add_mesh(
             combined_mesh,
-            scalars='Probability',
-            show_scalar_bar=True,
+            scalars="Probability",
+            show_scalar_bar=False,  # matplotlib widget handles the legend now
             pickable=False,
-            scalar_bar_args=SCALAR_BAR_CONFIG
         )
 
     def add_node_point_cloud(self, tiles):

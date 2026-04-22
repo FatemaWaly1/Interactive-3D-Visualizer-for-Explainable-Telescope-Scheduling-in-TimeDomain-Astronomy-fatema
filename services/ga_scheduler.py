@@ -2,7 +2,7 @@ import time
 import random
 import itertools
 import math
-from typing import Optional
+
 from services.geometry import angdist_vec
 from services.expected_merit import expected_FoM
 
@@ -71,8 +71,8 @@ def run_ga(
         pop_size=50,
         time_points=None,
         progress_callback=None,
-        max_opt_seconds: Optional[float] = None,
-        planned_opt_seconds: Optional[float] = None,
+        max_opt_seconds: float | None = None,
+        planned_opt_seconds: float | None = None,
 ) -> tuple[list[int], list[dict]]:
     """
     Run a Genetic Algorithm (GA) that optimizes schedule order (permutation) for FoM.
@@ -184,8 +184,7 @@ def run_ga(
                 )
                 next_cut_idx += 1
 
-        # ---- Elitism and reproduction ----
-        # How many elites to keep
+        # Elitism and reproduction
         num_elites = 1
         tournament_size = 3
         mutation_rate = 0.1
@@ -219,8 +218,6 @@ def run_ga(
     best_idx = max(range(len(population)), key=lambda i: fitness_values[i])
     best_individual = population[best_idx][:]
 
-    # If the GA finished before reaching all requested time points, fill remaining snapshots
-    # using the final best individual (best effort; avoids missing rows in reports).
     if time_points_sorted and next_cut_idx < len(time_points_sorted):
         current_best_individual = best_individual[:]
         for idx in range(next_cut_idx, len(time_points_sorted)):
@@ -338,7 +335,7 @@ def brute_force_best_order(
         deadlines,
         merits,
         start_position,
-        t_opt: Optional[float] = None,
+        t_opt: float | None = None,
 ):
     """Compute the true optimal permutation by enumerating all orders.
 

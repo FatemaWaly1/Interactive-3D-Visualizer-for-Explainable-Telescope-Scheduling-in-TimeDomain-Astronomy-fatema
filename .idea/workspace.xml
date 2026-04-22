@@ -5,31 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="882acbcf-81bd-446e-b9e3-21dbd368122c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ml/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ml/pointer_network.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/evaluation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/expected_merit.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/ga_scheduler.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/hybrid_dataset_generator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/schedule_metrics.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_controllers_workflow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_integration_ga_schedule_fom.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_scenario_compare_workflow.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/scenario_compare_dialog.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/splash_screen.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/colorbar_widget.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/interaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/interaction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/telescopes.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/telescopes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/tile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/evaluation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/fom_evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/fom_evaluator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/ga_scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/ga_scheduler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/tiles_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/tiles_io.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sky_visualizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/sky_visualizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/tets_interaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_interaction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/cdf_plot_widget.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/cdf_plot_widget.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/coordinate_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/coordinate_dialog.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/fom_deadlines_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/fom_deadlines_dialog.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main_window.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/schedule_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/schedule_panel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/splash_screen.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/splash_screen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visualization/convert_fits.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/visualization/sphere_renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/visualization/sphere_renderer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,12 +46,12 @@
     &quot;assignee&quot;: &quot;FatemaWaly1&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/FatemaWaly1/PythonProject.git&quot;,
-    &quot;accountId&quot;: &quot;1cfcb5bf-f0d2-4790-b2dd-27249a73c503&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Arezo002/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema.git",
+    "accountId": "1cfcb5bf-f0d2-4790-b2dd-27249a73c503"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -91,8 +78,9 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "fatema",
-    "last_opened_file_path": "C:/Users/fatem/PycharmProjects/PythonProject",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/fatem/Interactive-3D-Visualizer-for-Explainable-Telescope-Scheduling-in-TimeDomain-Astronomy-fatema",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -102,7 +90,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Python.evaluation">
+  <component name="RunManager" selected="Python.main">
     <configuration name="evaluation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PythonProject" />
       <option name="ENV_FILES" value="" />
@@ -199,8 +187,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.evaluation" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.evaluation" />
         <item itemvalue="Python tests.Python tests for tests.test_scenario_compare_workflow.TestScenarioCompareWorkflow" />
         <item itemvalue="Python tests.Python tests for tests.test_integration_ga_schedule_fom.TestIntegrationGAScheduleFoM" />
         <item itemvalue="Python tests.Python tests for tests.test_integration_ga_schedule_fom.TestIntegrationGAScheduleFoM.test_ga_output_order_is_valid_permutation" />
@@ -243,6 +231,7 @@
       <workItem from="1776074864972" duration="7718000" />
       <workItem from="1776159030290" duration="17242000" />
       <workItem from="1776329359653" duration="8477000" />
+      <workItem from="1776865828841" duration="2243000" />
     </task>
     <servers />
   </component>
@@ -265,6 +254,7 @@
     <SUITE FILE_PATH="coverage/PythonProject$.coverage" NAME=" Coverage Results" MODIFIED="1776160620074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PythonProject$evaluation.coverage" NAME="evaluation Coverage Results" MODIFIED="1776336018445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
     <SUITE FILE_PATH="coverage/PythonProject$sky_visualizer.coverage" NAME="sky_visualizer Coverage Results" MODIFIED="1764150247334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Interactive_3D_Visualizer_for_Explainable_Telescope_Scheduling_in_TimeDomain_Astronomy_fatema$main.coverage" NAME="main Coverage Results" MODIFIED="1776865903821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PythonProject$ScheduleWindow.coverage" NAME="ScheduleWindow Coverage Results" MODIFIED="1770726218375" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ui" />
   </component>
 </project>

@@ -21,11 +21,9 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-# Strings aligned with ``MainWindow.setWindowTitle`` / product wording.
 APP_TITLE = "GW Follow-up Telescope Scheduler"
 TAGLINE = "Gravitational-wave follow-up scheduling"
 
-# Minimum time the splash stays up when ``MainWindow()`` finishes quickly (warm cache).
 _MIN_VISIBLE_MS = 1200
 
 
