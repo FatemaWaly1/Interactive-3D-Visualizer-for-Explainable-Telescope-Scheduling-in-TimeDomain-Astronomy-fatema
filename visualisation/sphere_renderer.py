@@ -1,5 +1,5 @@
 """
-PyVista rendering for 3D sly sphere visualization.
+PyVista rendering for 3D sly sphere visualisation.
 Handles all visual rendering of tiles, nodes, and markers.
 """
 
@@ -12,7 +12,7 @@ except ModuleNotFoundError:
     # Optional dependency; not required for math-only unit tests.
     brightness_temperature = None
 
-from visualization.styles import *
+from visualisation.styles import *
 from project_utils import viridis_rgb
 from models.coordinates import ra_dec_to_xyz
 
@@ -39,7 +39,7 @@ class SphereRenderer:
         return self.plotter
 
     def add_sphere_wireframe(self):
-        """Add the background wireframe sphere to the visualization."""
+        """Add the background wireframe sphere to the visualisation."""
         # Dark background to match app theme (#0d1117)
         self.plotter.set_background("#0d1117")
         sphere = pv.Sphere(radius=SPHERE_RADIUS)
@@ -53,7 +53,7 @@ class SphereRenderer:
 
     def add_tile_patches(self, tiles):
         """
-        Add colored tile patches to the visualization.
+        Add colored tile patches to the visualisation.
 
         :param tiles (list): List of tile dictionaries with 'patch' and 'prob' keys
         """
@@ -536,5 +536,5 @@ class SphereRenderer:
         self.plotter.render()
 
     def show(self):
-        """Display the visualization in and interactive window."""
+        """Display the visualisation in and interactive window."""
         self.plotter.show(interactive=True)

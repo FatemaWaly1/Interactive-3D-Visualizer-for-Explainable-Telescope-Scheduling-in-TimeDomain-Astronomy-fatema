@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from visualization.sphere_renderer import SphereRenderer
+from visualisation.sphere_renderer import SphereRenderer
 
 class TestSphereRendererMath(unittest.TestCase):
     def test_slerp_between_orthogonal_unit_vectors(self):

@@ -1,6 +1,6 @@
 """
-Main sky visualizer orchestrator.
-Coordinates tile generation, visualization, and user interaction.
+Main sky visualiser orchestrator.
+Coordinates tile generation, visualisation, and user interaction.
 """
 
 import csv
@@ -15,13 +15,12 @@ from models.tile import Tile
 from models.schedule import Schedule
 from models.coordinates import ra_dec_to_xyz
 from services.tiles_io import load_tiles_from_file, generate_test_tiles_data
-#from services.map_generator import generate_map
-from visualization.sphere_renderer import SphereRenderer
-from visualization.styles import NODE_RADIUS
+from visualisation.sphere_renderer import SphereRenderer
+from visualisation.styles import NODE_RADIUS
 from controllers.interaction import InteractionController
 from project_utils import load_json_file
 
-class SkyVisualizer:
+class SkyVisualiser:
     def __init__(self, fov_size=15.0):
         """
             Initialize the sky visualizer.

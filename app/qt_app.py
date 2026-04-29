@@ -2,8 +2,14 @@ import sys
 
 from PySide6.QtWidgets import QApplication
 
-from ui.main_window import MainWindow
 from ui.splash_screen import show_splash_then_main
+
+
+def _create_main_window():
+    """Import MainWindow here so VTK/PyVista load after QApplication and the splash are up."""
+    from ui.main_window import MainWindow
+
+    return MainWindow()
 
 
 def main() -> None:
@@ -19,7 +25,7 @@ def main() -> None:
     with open("ui/theme.qss", "r", encoding="utf-8") as f:
         app.setStyleSheet(f.read())
 
-    show_splash_then_main(lambda: MainWindow())
+    show_splash_then_main(_create_main_window)
 
     if not app.property("_event_loop_running"):
         app.setProperty("_event_loop_running", True)

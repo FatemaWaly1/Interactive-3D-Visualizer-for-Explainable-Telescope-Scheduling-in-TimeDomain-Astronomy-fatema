@@ -1,10 +1,9 @@
 import time
 import random
 import itertools
-import math
 
-from services.geometry import angdist_vec
-from services.expected_merit import expected_FoM
+from services.schedule_metrics import analyse_schedule
+
 
 def fitness_function(
         order: list[int],
@@ -14,52 +13,29 @@ def fitness_function(
         merits,
         start_position
 ) -> float:
+    """
+    Score a tile permutation by its expected Figure of Merit.
+
+    Delegates the timeline, step-CDF, and FoM computation to
+    :func:`services.schedule_metrics.analyse_schedule`, so the GA fitness
+    path and the UI / reporting path share one implementation of the
+    scoring model.
+
+    ``deadlines`` may include a trailing ``+inf`` sentinel (matching the
+    ``deadlines_full`` convention used throughout the GA and UI). The
+    sentinel is stripped before delegating, since ``analyse_schedule``
+    takes only the finite deadlines and re-appends ``+inf`` internally.
+    """
     ordered_tiles = [tiles[i] for i in order]
-    prev_pos = start_position
-    time_accum = 0.0
-    tile_end_times: list[float] = []
-    tile_probs: list[float] = []
-    total_prob = 0.0
-    for tile in ordered_tiles:
-        dwell = float(tile.get("dwell_time", 60.0))
-        slew = 0.0
-        if telescope and prev_pos is not None:
-            dist_rad = angdist_vec(prev_pos, tile["position"])
-            dist_deg = math.degrees(dist_rad)
-            if telescope.slew_speed > 0.0:
-                slew = dist_deg / telescope.slew_speed
-        time_accum += slew + dwell
-        prob = float(tile.get("prob", 0.0))
-        total_prob += prob
-        tile_end_times.append(time_accum)
-        tile_probs.append(prob)
-        prev_pos = tile["position"]
-
-    if total_prob <= 0.0:
-        return 0.0
-
-    cumulative_probs: list[float] = []
-    running = 0.0
-    for p in tile_probs:
-        running += p / total_prob
-        cumulative_probs.append(running)
-
-    def detection_cdf(t: float) -> float:
-        if t <= 0.0:
-            return 0.0
-        cdf_value = 0.0
-        for end_time, cum_prob in zip(tile_end_times, cumulative_probs):
-            if t < end_time:
-                break
-            cdf_value = cum_prob
-        return min(cdf_value, 1.0)
-
-    try:
-        fom_value = expected_FoM(deadlines, merits, detection_cdf)
-    except ValueError as exc:
-        return 0.0
-
-    return fom_value
+    deadlines_finite = [d for d in deadlines if d != float("inf")]
+    metric = analyse_schedule(
+        ordered_tiles,
+        telescope,
+        start_position,
+        deadlines_finite,
+        merits=merits,
+    )
+    return float(metric.fom)
 
 def run_ga(
         tiles,

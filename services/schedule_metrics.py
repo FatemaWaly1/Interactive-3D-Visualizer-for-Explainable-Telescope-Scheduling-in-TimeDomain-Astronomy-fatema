@@ -41,7 +41,7 @@ def _build_detection_cdf(
             if t < end_time: # t before this tile finishes, stop at previous plateau
                 break
             cdf_value = cmv_prob # At or past end_time, update plateau
-        return min(cdf_value, 1.0) # Clam to valid CDF range
+        return min(cdf_value, 1.0) # Clamp to valid CDF range
 
     return detection_cdf
 
@@ -59,7 +59,8 @@ def analyse_schedule(
         tiles: Sequence[dict[str, Any]],
         telescope: Any,
         start_position: Optional[Tuple[float, float, float]],
-        deadlines_finite: Sequence[float]
+        deadlines_finite: Sequence[float],
+        merits: Optional[Sequence[float]] = None,
 ) -> ScheduleMetric:
     """
     Compute FoM, slew totals, CDF arrays, and deadline-oriented stats.
@@ -68,6 +69,11 @@ def analyse_schedule(
     :param telescope: Object with slew_speed
     :param start_position: Previous focus as 3-vector
     :param deadlines_finite: Strictly increasing finite deadlines (no +inf here)
+    :param merits: Optional merit ladder of length ``len(deadlines_finite) + 1``
+        aligned with ``deadlines_finite + [+inf]``. If ``None``, the canonical
+        ladder from :func:`compute_merits_for_deadlines` is used. Supplying this
+        lets callers that already hold a merit ladder (e.g. the GA fitness
+        path) reuse the same scoring contract without recomputing it.
     """
 
     prev_pos = start_position
@@ -77,25 +83,32 @@ def analyse_schedule(
     tile_probs: list[float] = []  # Row probas
 
     for tile in tiles:
-        dwell = float(tile.get("dwell_time", 60.0))  # Seconds on source
-        pos = tile.get("position")
-        if pos is None:
-            pos = tile.get("Position")
+        dwell = float(tile.get("dwell_time", 60.0))  # default 60s
+
+        # Tiles may be a cartesian vector
+        # Fall back to RA/Dec only when missing
+        pos = tile.get("position") or tile.get("Position")
         if pos is None:
             ra = tile.get("RA") or tile.get("ra")
             dec = tile.get("Dec") or tile.get("dec")
             if ra is not None and dec is not None:
                 pos = ra_dec_to_xyz(float(ra), float(dec))
+
+        # First tile (no prev pointing) or missing telescope/position, so no slew.
         slew = 0.0  # Seconds to move
         if telescope is not None and prev_pos is not None and pos is not None:
             dist_rad = angdist_vec(prev_pos, pos)
             dist_deg = math.degrees(dist_rad)
             if getattr(telescope, "slew_speed", 0.0) > 0.0:  # Avoid div by 0
                 slew = dist_deg / float(telescope.slew_speed)  # Time = angle / rate
+
+        # time_accum = wall-clock end of this tile (slew, then dwell).
         total_slew += slew
         time_accum += slew + dwell
         tile_end_times.append(time_accum)
         tile_probs.append(float(tile.get("prob", 0.0)))
+
+        # Only update the pointing reference when there's one
         if pos is not None:
             prev_pos = pos
 
@@ -128,8 +141,8 @@ def analyse_schedule(
     # FoM API expects inf endpoint
     deadlines_full = list(deadlines_finite) + [float("inf")]
 
-    # Match evaluate dialog
-    merits = compute_merits_for_deadlines(deadlines_full)
+    # Use caller-supplied ladder if provided, else canonical one.
+    merits = list(merits) if merits is not None else compute_merits_for_deadlines(deadlines_full)
 
     # Step CDF callable
     det = _build_detection_cdf(tile_end_times, cumulative_probs)

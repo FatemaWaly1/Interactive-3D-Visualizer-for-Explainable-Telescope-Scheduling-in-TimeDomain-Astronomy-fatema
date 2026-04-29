@@ -221,7 +221,7 @@ def generate_test_tiles_data(
     starting_ra = center_ra - radius
     starting_dec = center_dec - radius
 
-    # raw probabilities (unnormalized)
+    # First pass: compute raw probabilities (unnormalized)
     grid_data = []
     for row in range(tiles_per_side):
         for col in range(tiles_per_side):
@@ -231,10 +231,11 @@ def generate_test_tiles_data(
             prob = max(0.0, (1 - (distance / radius)))
             grid_data.append((ra, dec, prob))
 
-    # Normalize
+    # Normalize so probabilities sum to 1
     total_prob = sum(p for _, _, p in grid_data)
     if total_prob > 0:
         for i, (ra, dec, p) in enumerate(grid_data):
             grid_data[i] = (ra, dec, p / total_prob)
+    # else: leave as-is (all zeros); tiles would get 0 prob
 
     return grid_data

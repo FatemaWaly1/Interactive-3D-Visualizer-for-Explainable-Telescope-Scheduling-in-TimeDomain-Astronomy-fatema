@@ -26,7 +26,7 @@ class SchedulePanel(QWidget):
     show_fom_history_requested = Signal()
     optimise_schedule_requested = Signal()
     dwell_manual_changed = Signal()
-    hide_panel_requested = Signal()
+    #hide_panel_requested = Signal()
 
     def __init__(self, schedule):
         super().__init__()
@@ -43,26 +43,28 @@ class SchedulePanel(QWidget):
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(8)
 
-        # Header row: small close ('x') button at the top-left to hide the panel.
-        header_row = QHBoxLayout()
-        header_row.setContentsMargins(4, 4, 4, 0)
-        header_row.setSpacing(4)
-        self.close_btn = QPushButton("×")
-        self.close_btn.setToolTip("Hide schedule panel")
-        self.close_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.close_btn.setFixedSize(22, 22)
-        self.close_btn.setStyleSheet(
-            "QPushButton {"
-            " background-color: transparent; color: #8b949e;"
-            " border: 1px solid #30363d; border-radius: 4px;"
-            " font-size: 13pt; font-weight: 600; padding: 0px;"
-            "}"
-            "QPushButton:hover { background-color: #21262d; color: #e6edf3; }"
-        )
-        self.close_btn.clicked.connect(self.hide_panel_requested.emit)
-        header_row.addWidget(self.close_btn)
-        header_row.addStretch(1)
-        main_layout.addLayout(header_row)
+        # # Header row: small close ('x') button at the top-left to hide the panel.
+        # header_row = QHBoxLayout()
+        # header_row.setContentsMargins(4, 4, 4, 0)
+        # header_row.setSpacing(4)
+        # self.close_btn = QPushButton("×")
+        # self.close_btn.setToolTip("Hide schedule panel")
+        # self.close_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        # self.close_btn.setFixedSize(22, 22)
+        # self.close_btn.setStyleSheet(
+        #     "QPushButton {"
+        #     " background-color: transparent; color: #8b949e;"
+        #     " border: 1px solid #30363d; border-radius: 4px;"
+        #     " font-size: 13pt; font-weight: 600; padding: 0px;"
+        #     "}"
+        #     "QPushButton:hover { background-color: #21262d; color: #e6edf3; }"
+        # )
+        # self.close_btn.clicked.connect(self.hide_panel_requested.emit)
+        # header_row.addWidget(self.close_btn)
+        # header_row.addStretch(1)
+        # main_layout.addLayout(header_row)
+
+
 
         # Compact stats bar — one unified style
         stats_grip = QHBoxLayout()
@@ -149,6 +151,8 @@ class SchedulePanel(QWidget):
             header.setSectionResizeMode(col, QHeaderView.ResizeMode.Stretch)
 
         main_layout.addWidget(self.schedule_table, 4)
+        # Allow the table to shrink freely when the splitter is dragged
+        self.schedule_table.horizontalHeader().setMinimumSectionSize(30)
 
         # CDF plot widget (no timeline — was breaking layout)
         self.cdf_plot = CDFPlotWidget()

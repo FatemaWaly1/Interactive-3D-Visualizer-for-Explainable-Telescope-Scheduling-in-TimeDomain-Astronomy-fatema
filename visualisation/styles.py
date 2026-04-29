@@ -1,5 +1,5 @@
 """
-Visual styling constants and color schemes for the visualization.
+Visual styling constants and color schemes for the visualisation.
 Defines colors, sizes, and other visual parameters.
 """
 

@@ -11,11 +11,14 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Signal, Qt
 
 class TelescopeDialog(QDialog):
-    """Modal dialog for entering telescope settings."""
+    """Modal dialog for entering telescope settings.
 
-    # Emit dict with telescope data
-    telescope_saved = Signal(dict) # save to file
-    telescope_applied = Signal() # apply to active
+    Session-scoped: values are applied to the active session but not
+    persisted across launches. See ARCHITECTURE.md / thesis Section 3.2
+    for the rationale.
+    """
+
+    telescope_applied = Signal()  # apply to active session
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -68,27 +71,12 @@ class TelescopeDialog(QDialog):
         btn_row = QHBoxLayout()
         btn_row.addStretch(1)
 
-        self.save_button = QPushButton("Save")
-        self.save_button.setObjectName("primary")
-        self.save_button.clicked.connect(self._on_save)
-        btn_row.addWidget(self.save_button)
-
-        # Apply button
         self.apply_button = QPushButton("Apply")
         self.apply_button.setObjectName("primary")
         self.apply_button.clicked.connect(self._on_apply)
         btn_row.addWidget(self.apply_button)
 
         layout.addLayout(btn_row)
-
-    def _on_save(self):
-        """Emit telescope data for saving to file."""
-        data = {
-            "name": self.name_input.text().strip(),
-            "slew_speed": float(self.speed_input.value()), # didn't add strip() as float already ignores surrounding spaces
-            "dwell_time": float(self.dwell_time_input.value()),
-        }
-        self.telescope_saved.emit(data) # Emit save request
 
     def _on_apply(self):
         """Emit apply request without changing telescope fields."""

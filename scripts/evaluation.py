@@ -4,15 +4,6 @@ Evaluation script for GA vs brute-force optimal scheduling.
 For each of N synthetic maps, and each deadline in 10–100 s and cutoff 1–50%:
 - brute-force optimal FoM (deadlines shifted by the cutoff budget)
 - GA FoM under the same shifted scoring
-
-Output CSV columns:
-  map_id, deadline, cutoff_perc, cutoff_budget_s, ga_fom, optimal_fom, gap_perc
-
-Parallelises over maps (one process per map by default) so HPC / multi-core helps.
-
-Example:
-  python scripts/evaluation.py --maps 10 --workers 8
-  python scripts/evaluation.py --maps 1000 --workers 64
 """
 
 from __future__ import annotations
@@ -59,7 +50,6 @@ GA_POP_SIZE = 40
 
 @dataclass(frozen=True)
 class EvalConfig:
-    """Pickle-friendly bundle for worker processes."""
 
     n_tiles: int
     deadlines: tuple[int, ...]

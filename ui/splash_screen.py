@@ -24,7 +24,7 @@ from PySide6.QtWidgets import (
 APP_TITLE = "GW Follow-up Telescope Scheduler"
 TAGLINE = "Gravitational-wave follow-up scheduling"
 
-_MIN_VISIBLE_MS = 1200
+_MIN_VISIBLE_MS = 800
 
 
 class HealpixMotifWidget(QWidget):

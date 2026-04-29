@@ -10,7 +10,7 @@ class Tile(TypedDict, total=False):
     """
     Schema for tile dictionaries used throughout the application.
 
-    Tiles are created as plain dicts in SkyVisualizer._create_tile
+    Tiles are created as plain dicts in SkyVisualiser._create_tile
     and accessed via dictionary key lookup.
     """
 

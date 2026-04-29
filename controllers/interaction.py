@@ -1,6 +1,6 @@
 """
 Interaction controller for handling user input.
-Coordinates between UI events, data models, and visualization updates.
+Coordinates between UI events, data models, and visualisation updates.
 """
 
 import numpy as np

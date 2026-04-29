@@ -24,9 +24,9 @@ from pyvistaqt import QtInteractor
 
 from controllers.interaction import InteractionController
 from controllers.schedule_controller import ScheduleController
-from sky_visualizer import SkyVisualizer
+from sky_visualiser import SkyVisualiser
 from ui.schedule_panel import SchedulePanel
-from visualization.styles import NODE_RADIUS
+from visualisation.styles import NODE_RADIUS
 from models.telescope import Telescope
 from ui.telescope_panel import TelescopeDialog
 from ui.fom_deadlines_dialog import FoMDeadlinesDialog
@@ -38,7 +38,6 @@ from services.schedule_io import (
     save_schedule_file,
 )
 from services.schedule_metrics import compute_merits_for_deadlines
-from services.telescope_io import save_telescope
 from services.fom_evaluator import evaluate_schedule_fom
 from services.ga_scheduler import fitness_function, run_ga, shift_deadlines
 
@@ -126,6 +125,16 @@ class MainWindow(QMainWindow):
         layout.addWidget(splitter)
         self._splitter = splitter
 
+        # animation state variables
+        # self._panel_anim_timer = QTimer(self)
+        # self._panel_anim_timer.setInterval(16)  # ~60 fps
+        # self._panel_anim_timer.timeout.connect(self._on_panel_anim_tick)
+        # self._panel_anim_duration_ms = 220
+        # self._panel_anim_elapsed = 0
+        # self._panel_anim_from: list[int] = []
+        # self._panel_anim_to: list[int] = []
+        # self._panel_anim_hiding = True
+
         # # left
         # left_container = QWidget()
         # left_layout = QVBoxLayout(left_container)
@@ -156,6 +165,7 @@ class MainWindow(QMainWindow):
             title="Probability",
         )
         self._prob_colorbar.hide()  # hidden until the user loads tiles
+        self.vtk_widget.setMinimumWidth(200)  # allow left side to shrink when dragging right
         sphere_row_layout.addWidget(self._prob_colorbar)
 
         # Small reopen button, visible only when the schedule panel is hidden
@@ -178,22 +188,37 @@ class MainWindow(QMainWindow):
         left_layout.addWidget(sphere_row)
         splitter.addWidget(left_container)
 
-        self.visualizer = SkyVisualizer(fov_size=1.5)
-        self.visualizer.renderer.plotter = self.vtk_widget
+        self.visualiser = SkyVisualiser(fov_size=1.5)
+        self.visualiser.renderer.plotter = self.vtk_widget
 
         # Right: schedule dashboard
-        self.schedule_panel = SchedulePanel(self.visualizer.schedule)
+        self.schedule_panel = SchedulePanel(self.visualiser.schedule)
         splitter.addWidget(self.schedule_panel)
+        self.schedule_panel.setMinimumWidth(220)  # override Qt's auto-calculated minimum
         splitter.setSizes([800, 520])
+
+        splitter.setHandleWidth(6)
+        splitter.setStyleSheet("""
+            QSplitter::handle {
+                background-color: #30363d;
+                border-radius: 2px;
+            }
+            QSplitter::handle:hover {
+                background-color: #58a6ff;
+            }
+            QSplitter::handle:pressed {
+                background-color: #1f6feb;
+            }
+        """)
 
         # Store current telescope
         self.telescope = None
 
         # Controller for schedule-related logic
         self.schedule_controller = ScheduleController(
-            self.visualizer.schedule,
-            self.visualizer.tiles,
-            self.visualizer.renderer,
+            self.visualiser.schedule,
+            self.visualiser.tiles,
+            self.visualiser.renderer,
         )
 
         # Connect schedule signals
@@ -216,7 +241,7 @@ class MainWindow(QMainWindow):
             self.on_optimise_sch_clicked
         )
         self.schedule_panel.dwell_manual_changed.connect(self.mark_schedule_file_modified)
-        self.schedule_panel.hide_panel_requested.connect(self._hide_schedule_panel)
+        #self.schedule_panel.hide_panel_requested.connect(self._hide_schedule_panel)
 
         # Give schedule panel a handle back to the main window (for status updates)
         self.schedule_panel.main_window = self
@@ -243,7 +268,6 @@ class MainWindow(QMainWindow):
 
         # Telescope settings dialog
         self.telescope_dialog = TelescopeDialog()
-        self.telescope_dialog.telescope_saved.connect(self.on_telescope_saved)
         self.telescope_dialog.telescope_applied.connect(self.on_apply_telescope)
 
         # Toolbar
@@ -301,11 +325,6 @@ class MainWindow(QMainWindow):
                         background-color: #21262d;
                     }
                 """)
-
-        file_menu = menubar.addMenu("File")
-        file_menu.addAction("Load Tiles", self._open_tiles_dialog)
-        file_menu.addAction("Load Schedule", self._open_sch_dialog)
-        file_menu.addAction("Save Schedule", self._save_sch_dialog)
 
         tools_menu = menubar.addMenu("Tools")
         tools_menu.addAction("Scenario compare", self._open_scenario_compare)
@@ -373,12 +392,12 @@ class MainWindow(QMainWindow):
 
     def _on_schedule_row_selected(self, row):
         """Highlight node on sphere when row is clicked."""
-        tiles = self.visualizer.schedule.selected_tiles
+        tiles = self.visualiser.schedule.selected_tiles
         if row < 0 or row >= len(tiles):
             return
         tile = tiles[row]
-        tile_idx = self.visualizer.tiles.index(tile)
-        self.visualizer.renderer.highlight_selected_tile(tile, tile_idx)
+        tile_idx = self.visualiser.tiles.index(tile)
+        self.visualiser.renderer.highlight_selected_tile(tile, tile_idx)
 
     def _open_tiles_dialog(self):
         """Open file dialog to load tiles."""
@@ -419,7 +438,7 @@ class MainWindow(QMainWindow):
         show a context menu: Remove, Edit dwell time, Insert before/after.
         """
 
-        picker = self.visualizer.renderer.plotter.picker
+        picker = self.visualiser.renderer.plotter.picker
         if picker is None:
             return
 
@@ -428,7 +447,7 @@ class MainWindow(QMainWindow):
         y = self.vtk_widget.height() - pos.y()
 
         # Pick at that position
-        picker.Pick(x, y, 0, self.visualizer.renderer.plotter.renderer)
+        picker.Pick(x, y, 0, self.visualiser.renderer.plotter.renderer)
         point_id = picker.GetPointId()
 
         # if nothing picked, stop
@@ -436,10 +455,10 @@ class MainWindow(QMainWindow):
             return
 
         # Find corresponding tile from point index (assumes node order == tiles list order)
-        picked_tile = self.visualizer.tiles[point_id]
+        picked_tile = self.visualiser.tiles[point_id]
 
         # Only allow right-click menu for scheduled tiles
-        if picked_tile not in self.visualizer.schedule.selected_tiles:
+        if picked_tile not in self.visualiser.schedule.selected_tiles:
             return
 
         # Build context menu
@@ -471,12 +490,12 @@ class MainWindow(QMainWindow):
             return
 
         # Remove red marker for this tile index
-        tile_idx = self.visualizer.tiles.index(removed)
-        self.visualizer.renderer.remove_selected_tile_marker(tile_idx)
+        tile_idx = self.visualiser.tiles.index(removed)
+        self.visualiser.renderer.remove_selected_tile_marker(tile_idx)
 
         # Update labels & UI
-        self.visualizer.renderer.draw_schedule_labels(
-            self.visualizer.schedule.selected_tiles
+        self.visualiser.renderer.draw_schedule_labels(
+            self.visualiser.schedule.selected_tiles
         )
         self.schedule_panel.update_schedule()
         self.mark_schedule_file_modified()
@@ -503,7 +522,7 @@ class MainWindow(QMainWindow):
         """
         Start insert mode. The next left-click will insert tile before/after the given tile.
         """
-        schedule = self.visualizer.schedule.selected_tiles
+        schedule = self.visualiser.schedule.selected_tiles
 
         if tile not in schedule:
             return
@@ -517,26 +536,26 @@ class MainWindow(QMainWindow):
     def refresh_scene(self):
         """Clear and redraw the scene using current tiles."""
         self._stop_path_animation()
-        plotter = self.visualizer.renderer.plotter
+        plotter = self.visualiser.renderer.plotter
         plotter.clear()
 
         # Add sphere, tiles, and nodes
-        self.visualizer.renderer.add_sphere_wireframe()
-        if self.visualizer.tiles:
-            self.visualizer.renderer.add_tile_patches(self.visualizer.tiles)
-            self.visualizer.renderer.add_node_point_cloud(self.visualizer.tiles)
+        self.visualiser.renderer.add_sphere_wireframe()
+        if self.visualiser.tiles:
+            self.visualiser.renderer.add_tile_patches(self.visualiser.tiles)
+            self.visualiser.renderer.add_node_point_cloud(self.visualiser.tiles)
 
         # Recreate controller and picking
-        self.visualizer.controller = InteractionController(
-            self.visualizer.tiles,
-            self.visualizer.schedule,
-            self.visualizer.renderer,
+        self.visualiser.controller = InteractionController(
+            self.visualiser.tiles,
+            self.visualiser.schedule,
+            self.visualiser.renderer,
             max_pick_distance=NODE_RADIUS * 1.25,
             schedule_panel=self.schedule_panel,
             main_window=self
         )
-        self.visualizer.renderer.enable_picking(
-            self.visualizer.controller.handle_tile_click
+        self.visualiser.renderer.enable_picking(
+            self.visualiser.controller.handle_tile_click
         )
 
         plotter.reset_camera()
@@ -547,11 +566,11 @@ class MainWindow(QMainWindow):
         self._last_schedule_fom = None
         self._stop_path_animation()
         self.schedule_controller.clear()
-        self.visualizer.renderer.clear_selected_tiles()
-        for tile in self.visualizer.tiles:
+        self.visualiser.renderer.clear_selected_tiles()
+        for tile in self.visualiser.tiles:
             tile.pop("order", None)
-        self.visualizer.renderer.clear_schedule_labels()
-        self.visualizer.renderer.clear_schedule_path()
+        self.visualiser.renderer.clear_schedule_labels()
+        self.visualiser.renderer.clear_schedule_path()
         self.schedule_panel.update_schedule()
         self.schedule_panel.set_fom_value(None)
         self.schedule_panel.set_deadlines_for_cdf(None)
@@ -564,11 +583,11 @@ class MainWindow(QMainWindow):
             return
 
         self.schedule_panel.update_schedule()
-        tile_index = self.visualizer.tiles.index(last_tile)
-        self.visualizer.renderer.remove_selected_tile_marker(tile_index)
+        tile_index = self.visualiser.tiles.index(last_tile)
+        self.visualiser.renderer.remove_selected_tile_marker(tile_index)
 
         self._render_schedule_overlays(
-            self.visualizer.schedule.selected_tiles,
+            self.visualiser.schedule.selected_tiles,
             animate_path=False,
         )
         self.mark_schedule_file_modified()
@@ -626,7 +645,7 @@ class MainWindow(QMainWindow):
             self._apply_fom_metadata_from_file(fom_meta)
 
         def _finder(ra, dec, tol=1e-3):
-            for tile in self.visualizer.tiles:
+            for tile in self.visualiser.tiles:
                 if math.isclose(tile["ra"], ra, abs_tol=tol) and math.isclose(
                     tile["dec"], dec, abs_tol=tol
                 ):
@@ -636,22 +655,22 @@ class MainWindow(QMainWindow):
         self.schedule_controller.load_from_data(tiles_data, _finder)
 
         # Highlight all scheduled tiles
-        for tile in self.visualizer.schedule.selected_tiles:
-            tile_index = self.visualizer.tiles.index(tile)
-            self.visualizer.renderer.highlight_selected_tile(tile, tile_index)
+        for tile in self.visualiser.schedule.selected_tiles:
+            tile_index = self.visualiser.tiles.index(tile)
+            self.visualiser.renderer.highlight_selected_tile(tile, tile_index)
 
         self.schedule_panel.update_schedule()
-        self._render_schedule_overlays(self.visualizer.schedule.selected_tiles, animate_path=True)
+        self._render_schedule_overlays(self.visualiser.schedule.selected_tiles, animate_path=True)
         self._set_schedule_file_from_disk(path)
 
     def on_load_tiles(self, path):
         """Load tiles from file and redraw the scene."""
-        self.visualizer.load_tiles_from_file(path, normalize=True, clear_existing=True)
-        self.visualizer.schedule.clear()
+        self.visualiser.load_tiles_from_file(path, normalize=True, clear_existing=True)
+        self.visualiser.schedule.clear()
         self._set_schedule_file_from_disk(None)
 
-        # max_prob = max((t.get("prob", 0.0) for t in self.visualizer.tiles), default=1.0)
-        probs = [float(t.get("prob", 0.0)) for t in self.visualizer.tiles]
+        # max_prob = max((t.get("prob", 0.0) for t in self.visualiser.tiles), default=1.0)
+        probs = [float(t.get("prob", 0.0)) for t in self.visualiser.tiles]
         if probs:
             self._prob_colorbar.set_range(min(probs), max(probs), n_ticks=7)
             self._prob_colorbar.show()
@@ -660,11 +679,11 @@ class MainWindow(QMainWindow):
 
         self.schedule_panel.update_schedule()
         self.refresh_scene()
-        self._set_status(f"Loaded {len(self.visualizer.tiles)} tiles")
+        self._set_status(f"Loaded {len(self.visualiser.tiles)} tiles")
 
     def on_save_schedule(self, path):
         """Save schedule to a file (JSON may include FoM/deadline metadata)."""
-        tiles = self.visualizer.schedule.get_tiles()
+        tiles = self.visualiser.schedule.get_tiles()
         data = [{"ra": t["ra"], "dec": t["dec"], "prob": t["prob"], "dwell_time": t.get("dwell_time", 60.0)} for t in tiles]
         meta = self._build_fom_metadata_for_save()
         save_schedule_file(path, data, fom_metadata=meta)
@@ -674,7 +693,7 @@ class MainWindow(QMainWindow):
 
     def _find_tile_by_radec(self, ra, dec, tol=1e-3):
         """Find a tile in current tiles list."""
-        for tile in self.visualizer.tiles:
+        for tile in self.visualiser.tiles:
             if math.isclose(tile["ra"], ra, abs_tol=tol) and math.isclose(tile["dec"], dec, abs_tol=tol):
                 return tile
         return None
@@ -682,13 +701,6 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         # Close schedule window when main window closes
         super().closeEvent(event)
-
-    def on_telescope_saved(self, data):
-        """Save telescope to disk."""
-        save_telescope(data)
-        self.statusBar().showMessage(
-            f"Saved Telescope: {data['name']}", 3000
-        )
 
     def on_apply_telescope(self):
         """Recompute schedule timing using current telescope settings."""
@@ -724,7 +736,7 @@ class MainWindow(QMainWindow):
         )
         self._set_status(f"Telescope applied: {self.telescope.name}")
         if update_tile_dwell:
-            for tile in self.visualizer.schedule.selected_tiles:
+            for tile in self.visualiser.schedule.selected_tiles:
                 if not tile.get("dwell_locked"):
                     tile["dwell_time"] = self.telescope.dwell_time
         self.schedule_panel.set_telescope_context(self.telescope, angdist_vec)
@@ -741,7 +753,7 @@ class MainWindow(QMainWindow):
 
     def on_evaluate_schedule_clicked(self) -> None:
         """Evaluate current schedule's FoM. Opens one dialog: enter deadlines, then see FoM details in the same window."""
-        tiles = self.visualizer.schedule.get_tiles()
+        tiles = self.visualiser.schedule.get_tiles()
         if not tiles:
             self._set_status("Cannot evaluate FoM: schedule is empty.")
             return
@@ -890,7 +902,7 @@ class MainWindow(QMainWindow):
                 self._ga_progress_dialog.activateWindow()
             return
 
-        tiles = self.visualizer.schedule.get_tiles()
+        tiles = self.visualiser.schedule.get_tiles()
         if not tiles:
             self._set_status("Cannot optimise: schedule is empty.")
             return
@@ -996,7 +1008,7 @@ class MainWindow(QMainWindow):
         # Assign explicit 'order' indices so renderer can label tiles
         for idx, tile in enumerate(best_tiles, start=1):
             tile["order"] = idx
-            self.visualizer.schedule.add_tile(tile)
+            self.visualiser.schedule.add_tile(tile)
 
         # Update schedule panel timing/table
         self.schedule_panel.update_schedule()
@@ -1005,11 +1017,11 @@ class MainWindow(QMainWindow):
         self.refresh_scene()
 
         # Highlight scheduled tiles and draw path/labels
-        for tile in self.visualizer.schedule.selected_tiles:
-            tile_idx = self.visualizer.tiles.index(tile)
-            self.visualizer.renderer.highlight_selected_tile(tile, tile_idx)
+        for tile in self.visualiser.schedule.selected_tiles:
+            tile_idx = self.visualiser.tiles.index(tile)
+            self.visualiser.renderer.highlight_selected_tile(tile, tile_idx)
 
-        self._render_schedule_overlays(self.visualizer.schedule.selected_tiles, animate_path=True)
+        self._render_schedule_overlays(self.visualiser.schedule.selected_tiles, animate_path=True)
 
         # Report FoM at the last requested cutoff (typically 20s)
         if history:
@@ -1131,12 +1143,12 @@ class MainWindow(QMainWindow):
 
     def _render_schedule_overlays(self, tiles, animate_path: bool = False) -> None:
         """Draw labels immediately and path either instantly or via adaptive animation."""
-        self.visualizer.renderer.draw_schedule_labels(tiles)
+        self.visualiser.renderer.draw_schedule_labels(tiles)
         if animate_path:
             self._start_path_animation(tiles)
         else:
             self._stop_path_animation()
-            self.visualizer.renderer.draw_schedule_path(tiles)
+            self.visualiser.renderer.draw_schedule_path(tiles)
 
     def _start_path_animation(self, tiles) -> None:
         """Animate the schedule path as one continuous flowing stroke."""
@@ -1144,20 +1156,20 @@ class MainWindow(QMainWindow):
         ordered_tiles = list(tiles)
         n_tiles = len(ordered_tiles)
         if n_tiles < 2:
-            self.visualizer.renderer.draw_schedule_path(ordered_tiles)
+            self.visualiser.renderer.draw_schedule_path(ordered_tiles)
             return
 
         duration_ms = self._adaptive_path_duration_ms(n_tiles)
         if duration_ms <= 0:
-            self.visualizer.renderer.draw_schedule_path(ordered_tiles)
+            self.visualiser.renderer.draw_schedule_path(ordered_tiles)
             return
 
         self._path_anim_tiles = ordered_tiles
-        self._path_anim_path, self._path_anim_brightness = self.visualizer.renderer.build_schedule_path_geometry(
+        self._path_anim_path, self._path_anim_brightness = self.visualiser.renderer.build_schedule_path_geometry(
             ordered_tiles
         )
         if self._path_anim_path is None or len(self._path_anim_path) < 2:
-            self.visualizer.renderer.draw_schedule_path(ordered_tiles)
+            self.visualiser.renderer.draw_schedule_path(ordered_tiles)
             self._stop_path_animation()
             return
 
@@ -1165,7 +1177,7 @@ class MainWindow(QMainWindow):
         frame_interval_ms = 33
         self._path_anim_total_frames = max(1, int(round(duration_ms / frame_interval_ms)))
         self._path_anim_frame = 0
-        self.visualizer.renderer.begin_schedule_path_flow(
+        self.visualiser.renderer.begin_schedule_path_flow(
             self._path_anim_path, self._path_anim_brightness
         )
         self._path_anim_timer.start(frame_interval_ms)
@@ -1174,7 +1186,7 @@ class MainWindow(QMainWindow):
         """Stop any in-progress schedule path animation."""
         if self._path_anim_timer.isActive():
             self._path_anim_timer.stop()
-        self.visualizer.renderer.clear_schedule_path_head(render=False)
+        self.visualiser.renderer.clear_schedule_path_head(render=False)
         self._path_anim_tiles = []
         self._path_anim_path = None
         self._path_anim_brightness = None
@@ -1201,12 +1213,12 @@ class MainWindow(QMainWindow):
 
         self._path_anim_frame += 1
         if self._path_anim_frame >= self._path_anim_total_frames:
-            self.visualizer.renderer.update_schedule_path_flow(
+            self.visualiser.renderer.update_schedule_path_flow(
                 self._path_anim_path,
                 self._path_anim_brightness,
                 self._path_anim_total_points,
             )
-            self.visualizer.renderer.clear_schedule_path_head()
+            self.visualiser.renderer.clear_schedule_path_head()
             self._stop_path_animation()
             return
 
@@ -1216,7 +1228,7 @@ class MainWindow(QMainWindow):
             round((self._path_anim_total_points - 2) * progress)
         )
         n_visible = max(2, min(n_visible, self._path_anim_total_points))
-        self.visualizer.renderer.update_schedule_path_flow(
+        self.visualiser.renderer.update_schedule_path_flow(
             self._path_anim_path,
             self._path_anim_brightness,
             n_visible,
@@ -1232,22 +1244,71 @@ class MainWindow(QMainWindow):
             telescope=self.telescope,
             start_position=self.schedule_panel.start_position,
             deadlines_finite=dfin,
-            current_tiles_getter=lambda: self.visualizer.schedule.get_tiles(),
+            current_tiles_getter=lambda: self.visualiser.schedule.get_tiles(),
         )
         dlg.exec()
 
+    # def _hide_schedule_panel(self) -> None:
+    #     """Hide the right-hand schedule panel and show the small reopen button."""
+    #     if getattr(self, "_splitter", None) is not None:
+    #         self._splitter_sizes_before_hide = self._splitter.sizes()
+    #     self.schedule_panel.hide()
+    #     if getattr(self, "_show_panel_btn", None) is not None:
+    #         self._show_panel_btn.show()
+    #
+    # def _show_schedule_panel(self) -> None:
+    #     """Show the right-hand schedule panel and hide the reopen button."""
+    #     self.schedule_panel.show()
+    #     if getattr(self, "_splitter", None) is not None and getattr(self, "_splitter_sizes_before_hide", None):
+    #         self._splitter.setSizes(self._splitter_sizes_before_hide)
+    #     if getattr(self, "_show_panel_btn", None) is not None:
+    #         self._show_panel_btn.hide()
+
     def _hide_schedule_panel(self) -> None:
-        """Hide the right-hand schedule panel and show the small reopen button."""
-        if getattr(self, "_splitter", None) is not None:
-            self._splitter_sizes_before_hide = self._splitter.sizes()
-        self.schedule_panel.hide()
-        if getattr(self, "_show_panel_btn", None) is not None:
-            self._show_panel_btn.show()
+        """Slide the schedule panel closed."""
+        if self._panel_anim_timer.isActive():
+            self._panel_anim_timer.stop()
+        sizes = self._splitter.sizes()
+        total = sum(sizes)
+        self._panel_anim_from = list(sizes)
+        self._panel_anim_to = [total, 0]
+        self._panel_anim_hiding = True
+        self._panel_anim_elapsed = 0
+        self.schedule_panel.setVisible(True)  # keep visible during slide-out
+        self._panel_anim_timer.start()
 
     def _show_schedule_panel(self) -> None:
-        """Show the right-hand schedule panel and hide the reopen button."""
-        self.schedule_panel.show()
-        if getattr(self, "_splitter", None) is not None and getattr(self, "_splitter_sizes_before_hide", None):
-            self._splitter.setSizes(self._splitter_sizes_before_hide)
-        if getattr(self, "_show_panel_btn", None) is not None:
-            self._show_panel_btn.hide()
+        """Slide the schedule panel open."""
+        if self._panel_anim_timer.isActive():
+            self._panel_anim_timer.stop()
+        sizes = self._splitter.sizes()
+        total = sum(sizes)
+        target_right = getattr(self, "_splitter_sizes_before_hide", [800, 520])[1]
+        target_right = max(target_right, 400)  # safety minimum
+        self._panel_anim_from = [total, 0]
+        self._panel_anim_to = [total - target_right, target_right]
+        self._panel_anim_hiding = False
+        self._panel_anim_elapsed = 0
+        self.schedule_panel.setVisible(True)
+        self._show_panel_btn.hide()
+        self._panel_anim_timer.start()
+
+    def _on_panel_anim_tick(self) -> None:
+        """Advance the slide animation one frame."""
+        self._panel_anim_elapsed += self._panel_anim_timer.interval()
+        t = min(self._panel_anim_elapsed / self._panel_anim_duration_ms, 1.0)
+        # Ease-out cubic
+        ease = 1.0 - (1.0 - t) ** 3
+        new_sizes = [
+            int(round(a + (b - a) * ease))
+            for a, b in zip(self._panel_anim_from, self._panel_anim_to)
+        ]
+        self._splitter.setSizes(new_sizes)
+
+        if t >= 1.0:
+            self._panel_anim_timer.stop()
+            if self._panel_anim_hiding:
+                self.schedule_panel.hide()  # hide only after fully closed
+                self._show_panel_btn.show()
+            else:
+                self._splitter_sizes_before_hide = self._splitter.sizes()
